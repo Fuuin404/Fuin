@@ -4,6 +4,8 @@ import { prisma } from "../utils/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { BlogPostCard } from "./../../components/general/BlogPostCard";
 
+export const dynamic = "force-dynamic";
+
 async function getData(userId: string) {
   // await new Promise((resolve) => setTimeout(resolve, 600));
   const data = await prisma.blogPost.findMany({
