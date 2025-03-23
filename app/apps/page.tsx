@@ -1,4 +1,4 @@
-export default function about() {
+export default function Apps() {
   return (
     <div className="mb-4">
       <h1 className="text-3xl font-semibold">Apps</h1>
