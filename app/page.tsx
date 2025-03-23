@@ -1,7 +1,7 @@
 import { BlogPostCard } from "@/components/general/BlogPostCard";
 import { prisma } from "./utils/db";
 
-export const revalidate = 60;
+export const revalidate = 3;
 
 async function getData() {
   // await new Promise((resolve) => setTimeout(resolve, 600));
