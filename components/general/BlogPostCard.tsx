@@ -1,5 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useTransition } from "react";
+import { deletePost } from "@/app/actions";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { Button } from "@/components/ui/button"; // Assuming Shadcn UI
 
 interface IappProps {
   data: {
@@ -14,7 +20,21 @@ interface IappProps {
     updatedAt: Date;
   };
 }
+
 export function BlogPostCard({ data }: IappProps) {
+  const { user } = useKindeBrowserClient(); // Client-side user info
+  const [isPending, startTransition] = useTransition();
+
+  const handleDelete = () => {
+    startTransition(async () => {
+      try {
+        await deletePost(data.id);
+      } catch (error) {
+        console.error("Failed to delete post:", error);
+      }
+    });
+  };
+
   return (
     <div className="group relative overflow-hidden rounded-sm border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg">
       <Link href={`/post/${data.id}`} className="block w-full h-full">
@@ -51,7 +71,7 @@ export function BlogPostCard({ data }: IappProps) {
               </p>
             </div>
             <time className="text-xs text-gray-500">
-              {new Intl.DateTimeFormat("en-gb", {
+              {new Intl.DateTimeFormat("en-GB", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -60,6 +80,20 @@ export function BlogPostCard({ data }: IappProps) {
           </div>
         </div>
       </Link>
+
+      {/* Delete Button (visible only to author) */}
+      {user && user.id === data.authorId && (
+        <div className="absolute top-2 right-2">
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={handleDelete}
+            disabled={isPending}
+          >
+            {isPending ? "Deleting..." : "Delete"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
