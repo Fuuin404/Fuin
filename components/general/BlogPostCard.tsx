@@ -32,7 +32,7 @@ export function BlogPostCard({ data }: IappProps) {
             {data.title}
           </h3>
 
-          <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+          <p className="mb-4 text-sm text-gray-600 line-clamp-3 whitespace-pre-wrap">
             {data.content}
           </p>
 
