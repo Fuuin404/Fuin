@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <div className="mb-4">
-      <h1 className="text-3xl font-semibold">About Fūin</h1>
+      <h1 className="text-3xl font-medium mb-4">About Fūin</h1>
       <p>
         We are Fūin—a collective of creators admiring the beauty of code and
         design. We craft apps and experiences that blur the line between art and

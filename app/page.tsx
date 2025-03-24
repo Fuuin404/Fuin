@@ -27,7 +27,7 @@ async function getData() {
 
 export default function Home() {
   return (
-    <div className="mb-4">
+    <div className="mb-3">
       <h1 className="text-3xl font-medium mb-4">Latest Posts</h1>
 
       {/* <Suspense fallback={<BlogPostsGrid />}> */}

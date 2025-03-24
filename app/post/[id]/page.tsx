@@ -38,7 +38,9 @@ export default async function IdPage({ params }: { params: Params }) {
         Back to Posts
       </Link>
       <div className="mb-8 mt-6">
-        <h1 className="text-3xl font-bold tracking-tight mb-4">{data.title}</h1>
+        <h1 className="text-3xl font-medium tracking-tight mb-4">
+          {data.title}
+        </h1>
         <div className="flex items-center space-x-4">
           <div className="flex items-center justify-between gap-x-2">
             <div className="relative size-10 overflow-hidden rounded-full">

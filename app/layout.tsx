@@ -1,17 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google"; // Changed imports
 import "./globals.css";
 import { Navbar } from "@/components/general/Navbar";
 import { AuthProvider } from "@/components/general/AuthProvider";
 import { Analytics } from "@vercel/analytics/react";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Define Inter as the sans-serif font
+const inter = Inter({
+  variable: "--font-inter", // Changed variable name
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Define JetBrains Mono as the monospace font
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono", // Changed variable name
   subsets: ["latin"],
 });
 
@@ -29,7 +31,7 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${inter.variable} ${jetBrainsMono.variable} antialiased`}
         >
           <Navbar />
           <div className="m-8">{children}</div>
