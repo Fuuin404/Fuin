@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
         port: "",
       },
       {
-        hostname: "pixabay.com",
+        hostname: "cdn.pixabay.com",
         protocol: "https",
         port: "",
       },
