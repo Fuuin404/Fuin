@@ -4,19 +4,15 @@ import { notFound } from "next/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
+import { LikeButton } from "@/components/general/LikeButton";
 
 async function getData(id: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 2000));
   const data = await prisma.blogPost.findUnique({
-    where: {
-      id: id,
-    },
+    where: { id },
+    include: { likes: true },
   });
 
-  if (!data) {
-    return notFound();
-  }
-
+  if (!data) return notFound();
   return data;
 }
 
@@ -42,7 +38,7 @@ export default async function IdPage({ params }: { params: Params }) {
           {data.title}
         </h1>
         <div className="flex items-center space-x-4">
-          <div className="flex items-center justify-between gap-x-2">
+          <div className="flex items-center gap-x-2">
             <div className="relative size-10 overflow-hidden rounded-full">
               <Image
                 src={data.authorImage}
@@ -54,7 +50,7 @@ export default async function IdPage({ params }: { params: Params }) {
             <p className="font-medium">{data.authorName}</p>
           </div>
           <p className="text-sm text-gray-500">
-            {new Intl.DateTimeFormat("en-gb", {
+            {new Intl.DateTimeFormat("en-GB", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -62,7 +58,7 @@ export default async function IdPage({ params }: { params: Params }) {
           </p>
         </div>
       </div>
-      <div className="relative h-[400] w-full mb-8 overflow-hidden rounded-lg">
+      <div className="relative h-[400px] w-full mb-8 overflow-hidden rounded-lg">
         <Image
           src={data.imageUrl}
           alt={data.title}
@@ -72,8 +68,11 @@ export default async function IdPage({ params }: { params: Params }) {
         />
       </div>
       <Card>
-        <CardContent>
+        <CardContent className="pt-6">
           <p className="text-gray-700 whitespace-pre-wrap">{data.content}</p>
+          <div className="mt-4 flex items-center space-x-2">
+            <LikeButton postId={data.id} initialLikes={data.likes} />
+          </div>
         </CardContent>
       </Card>
     </div>

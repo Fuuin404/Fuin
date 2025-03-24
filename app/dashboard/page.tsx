@@ -7,13 +7,16 @@ import { BlogPostCard } from "./../../components/general/BlogPostCard";
 export const dynamic = "force-dynamic";
 
 async function getData(userId: string) {
-  // await new Promise((resolve) => setTimeout(resolve, 600));
+  // await new Promise((resolve) => setTimeout(resolve, 600)); // Uncomment if needed for testing
   const data = await prisma.blogPost.findMany({
     where: {
       authorId: userId,
     },
     orderBy: {
       createdAt: "desc",
+    },
+    include: {
+      likes: true, // Fetch likes relation
     },
   });
 
@@ -22,8 +25,11 @@ async function getData(userId: string) {
 
 export default async function DashboardRoute() {
   const { getUser } = getKindeServerSession();
-
   const user = await getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized"); // Or redirect: redirect("/api/auth/login")
+  }
 
   const data = await getData(user.id);
 

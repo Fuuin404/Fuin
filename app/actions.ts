@@ -5,7 +5,6 @@ import { prisma } from "./utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
-// Existing create action
 export async function handleSubmission(formData: FormData) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -30,7 +29,6 @@ export async function handleSubmission(formData: FormData) {
   return redirect("/dashboard");
 }
 
-// New delete action
 export async function deletePost(postId: string) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -41,12 +39,42 @@ export async function deletePost(postId: string) {
   });
 
   if (!post) throw new Error("Post not found");
-  if (post.authorId !== user.id)
-    throw new Error("Not authorized to delete this post");
+  if (post.authorId !== user.id) throw new Error("Not authorized");
 
   await prisma.blogPost.delete({
     where: { id: postId },
   });
 
-  revalidatePath("/dashboard"); // Refresh post list
+  revalidatePath("/dashboard");
+}
+
+export async function toggleLike(postId: string) {
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const existingLike = await prisma.likes.findFirst({
+    where: {
+      userId: user.id,
+      postId: postId,
+    },
+  });
+
+  if (existingLike) {
+    // Unlike: Remove the like
+    await prisma.likes.delete({
+      where: { id: existingLike.id },
+    });
+  } else {
+    // Like: Add a new like
+    await prisma.likes.create({
+      data: {
+        userId: user.id,
+        postId,
+      },
+    });
+  }
+
+  revalidatePath("/dashboard");
+  revalidatePath(`/post/${postId}`);
 }

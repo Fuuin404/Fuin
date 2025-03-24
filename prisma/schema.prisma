@@ -8,15 +8,24 @@ datasource db {
 }
 
 model BlogPost {
-  id String @id @default(uuid())
-  title String
-  content String
-  imageUrl String
-  authorId String
-  authorName String
+  id          String    @id @default(uuid())
+  title       String
+  content     String
+  imageUrl    String
+  authorId    String
+  authorName  String
   authorImage String
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  likes       Likes[]   // Relation to Likes table
+}
 
+model Likes {
+  id        String   @id @default(uuid())
+  userId    String
+  postId    String
+  createdAt DateTime @default(now())
+  post      BlogPost @relation(fields: [postId], references: [id])
+
+  @@unique([userId, postId]) // Prevents duplicate likes
 }
