@@ -13,11 +13,9 @@ export default function ClientSettings({ email }: { email: string }) {
   const handleDeleteAccount = () => {
     if (!isConfirming) {
       setIsConfirming(true);
-      console.log("Confirmation requested");
       return;
     }
 
-    console.log("Attempting to delete account");
     startTransition(async () => {
       try {
         const response = await fetch("/api/delete-account", {
@@ -25,19 +23,16 @@ export default function ClientSettings({ email }: { email: string }) {
           credentials: "include",
         });
 
-        console.log("Response status:", response.status);
         if (!response.ok) {
           const errorText = await response.text();
           throw new Error(`Failed to delete account: ${errorText}`);
         }
 
-        console.log("Account deleted, redirecting to logout");
         router.push("/api/auth/logout");
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to delete account"
         );
-        console.error("Delete error:", err);
         setIsConfirming(false);
       }
     });

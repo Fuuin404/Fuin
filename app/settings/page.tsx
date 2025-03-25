@@ -1,6 +1,6 @@
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
-import ClientSettings from "./ClientSettings"; // Import client component
+import ClientSettings from "./ClientSettings";
 
 export default async function SettingsPage() {
   const { getUser } = getKindeServerSession();
@@ -8,5 +8,5 @@ export default async function SettingsPage() {
 
   if (!user) redirect("/api/auth/login");
 
-  return <ClientSettings email={user.email} />;
+  return <ClientSettings email={user.email ?? "No email provided"} />;
 }
