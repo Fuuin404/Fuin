@@ -1,19 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const runtime = "nodejs";
 
 async function getManagementToken() {
-  console.log("KINDE_ISSUER_URL:", process.env.KINDE_ISSUER_URL);
-  console.log(
-    "KINDE_MANAGEMENT_CLIENT_ID:",
-    process.env.KINDE_MANAGEMENT_CLIENT_ID
-  );
-  console.log(
-    "KINDE_MANAGEMENT_CLIENT_SECRET:",
-    process.env.KINDE_MANAGEMENT_CLIENT_SECRET
-  );
-
   if (!process.env.KINDE_ISSUER_URL) {
     throw new Error("KINDE_ISSUER_URL is not set in environment variables");
   }
@@ -49,7 +39,8 @@ async function getManagementToken() {
   return access_token;
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE() {
+  // Removed `req: NextRequest`
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -58,7 +49,6 @@ export async function DELETE(req: NextRequest) {
   }
 
   const kindeUserId = user.id;
-  console.log("Deleting user ID:", kindeUserId); // Log the user ID for debugging
   try {
     const apiToken = await getManagementToken();
     const response = await fetch(
