@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTransition } from "react";
-import { deletePost, toggleLike } from "@/app/actions";
+import { toggleLike } from "@/app/actions";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@/components/ui/button";
 
@@ -30,18 +30,8 @@ export function BlogPostCard({ data }: IappProps) {
   const hasLiked = user ? likes.some((like) => like.userId === user.id) : false;
   const likeCount = likes.length;
 
-  const handleDelete = () => {
-    startTransition(async () => {
-      try {
-        await deletePost(data.id);
-      } catch (error) {
-        console.error("Failed to delete post:", error);
-      }
-    });
-  };
-
   const handleLike = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent click from bubbling to Link
+    e.stopPropagation();
     startTransition(async () => {
       try {
         await toggleLike(data.id);
@@ -94,7 +84,6 @@ export function BlogPostCard({ data }: IappProps) {
                   day: "numeric",
                 }).format(data.createdAt)}
               </time>
-              {/* Like Button Inside Link but with stopPropagation */}
               <Button
                 variant="ghost"
                 size="sm"
@@ -116,19 +105,6 @@ export function BlogPostCard({ data }: IappProps) {
           </div>
         </div>
       </Link>
-
-      {user && user.id === data.authorId && (
-        <div className="absolute top-2 right-2">
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={handleDelete}
-            disabled={isPending}
-          >
-            {isPending ? "Deleting..." : "Delete"}
-          </Button>
-        </div>
-      )}
     </div>
   );
 }

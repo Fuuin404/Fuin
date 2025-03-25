@@ -31,16 +31,39 @@ export async function handleSubmission(formData: FormData) {
 
 export async function deletePost(postId: string) {
   const { getUser } = getKindeServerSession();
-  const user = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  let user;
+  try {
+    user = await getUser();
+    console.log("User fetched for deletion:", user?.id);
+  } catch (error) {
+    console.error("Error fetching user in deletePost:", error);
+    throw new Error("Authentication failed");
+  }
+
+  if (!user) {
+    console.error("No user found for post:", postId);
+    throw new Error("Unauthorized");
+  }
 
   const post = await prisma.blogPost.findUnique({
     where: { id: postId },
   });
 
-  if (!post) throw new Error("Post not found");
-  if (post.authorId !== user.id) throw new Error("Not authorized");
+  if (!post) {
+    console.error("Post not found:", postId);
+    throw new Error("Post not found");
+  }
+  if (post.authorId !== user.id) {
+    console.error("User not authorized to delete post:", postId);
+    throw new Error("Not authorized");
+  }
 
+  // Delete associated likes first
+  await prisma.likes.deleteMany({
+    where: { postId },
+  });
+
+  // Now delete the blog post
   await prisma.blogPost.delete({
     where: { id: postId },
   });
@@ -50,7 +73,14 @@ export async function deletePost(postId: string) {
 
 export async function toggleLike(postId: string) {
   const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  let user;
+  try {
+    user = await getUser();
+  } catch (error) {
+    console.error("Error fetching user in toggleLike:", error);
+    throw new Error("Authentication failed");
+  }
+
   if (!user) throw new Error("Unauthorized");
 
   const existingLike = await prisma.likes.findFirst({
@@ -61,12 +91,10 @@ export async function toggleLike(postId: string) {
   });
 
   if (existingLike) {
-    // Unlike: Remove the like
     await prisma.likes.delete({
       where: { id: existingLike.id },
     });
   } else {
-    // Like: Add a new like
     await prisma.likes.create({
       data: {
         userId: user.id,

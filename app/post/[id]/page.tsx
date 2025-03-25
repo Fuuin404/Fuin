@@ -5,6 +5,8 @@ import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { LikeButton } from "@/components/general/LikeButton";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import DeletePostButton from "./DeletePostButton";
 
 async function getData(id: string) {
   const data = await prisma.blogPost.findUnique({
@@ -21,6 +23,8 @@ type Params = Promise<{ id: string }>;
 export default async function IdPage({ params }: { params: Params }) {
   const { id } = await params;
   const data = await getData(id);
+  const { getUser } = getKindeServerSession();
+  const user = await getUser();
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
@@ -72,6 +76,9 @@ export default async function IdPage({ params }: { params: Params }) {
           <p className="text-gray-700 whitespace-pre-wrap">{data.content}</p>
           <div className="mt-4 flex items-center space-x-2">
             <LikeButton postId={data.id} initialLikes={data.likes} />
+            {user && user.id === data.authorId && (
+              <DeletePostButton postId={data.id} />
+            )}
           </div>
         </CardContent>
       </Card>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/general/Navbar";
 import { AuthProvider } from "@/components/general/AuthProvider";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Define Inter as the sans-serif font
 const inter = Inter({
@@ -36,6 +37,7 @@ export default function RootLayout({
           <Navbar />
           <div className="m-8">{children}</div>
           <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     </AuthProvider>
