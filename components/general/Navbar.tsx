@@ -36,9 +36,9 @@ export function Navbar() {
           </Link>
           <Link
             className="text-lg font-sm hover:text-red-500 transition-colors"
-            href="/apps"
+            href="/settings"
           >
-            apps
+            settings
           </Link>
           <Link
             className="text-lg font-sm hover:text-red-500 transition-colors"
