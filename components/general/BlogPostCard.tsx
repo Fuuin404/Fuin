@@ -1,3 +1,4 @@
+// BlogPostCard.tsx
 "use client";
 
 import Link from "next/link";
@@ -6,6 +7,9 @@ import { useTransition } from "react";
 import { toggleLike } from "@/app/actions";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from "react-markdown";
+import rehypeHighlight from "rehype-highlight";
+import "highlight.js/styles/github.css"; // Or your preferred style
 
 interface IappProps {
   data: {
@@ -58,9 +62,11 @@ export function BlogPostCard({ data }: IappProps) {
             {data.title}
           </h3>
 
-          <p className="mb-4 text-sm text-gray-600 line-clamp-3 whitespace-pre-wrap">
-            {data.content}
-          </p>
+          <div className="mb-4 text-sm text-gray-600 line-clamp-3">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+              {data.content}
+            </ReactMarkdown>
+          </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">

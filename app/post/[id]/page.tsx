@@ -1,3 +1,4 @@
+// app/post/[id]/page.tsx
 import { prisma } from "@/app/utils/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,6 +8,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { LikeButton } from "@/components/general/LikeButton";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import DeletePostButton from "./DeletePostButton";
+import { MarkdownContent } from "@/components/general/MarkdownContent";
 
 async function getData(id: string) {
   const data = await prisma.blogPost.findUnique({
@@ -73,7 +75,7 @@ export default async function IdPage({ params }: { params: Params }) {
       </div>
       <Card>
         <CardContent className="pt-6">
-          <p className="text-gray-700 whitespace-pre-wrap">{data.content}</p>
+          <MarkdownContent content={data.content} />
           <div className="mt-4 flex items-center space-x-2">
             <LikeButton postId={data.id} initialLikes={data.likes} />
             {user && user.id === data.authorId && (

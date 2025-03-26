@@ -1,3 +1,4 @@
+// app/dashboard/create/page.tsx
 import { handleSubmission } from "@/app/actions";
 import { Submitbutton } from "@/components/general/Submitbutton";
 import {
@@ -16,7 +17,11 @@ export default function createBlogRoute() {
       <Card className="max-w-lg mx-auto">
         <CardHeader>
           <CardTitle>Create Post</CardTitle>
-          <CardDescription>Create a new post to share</CardDescription>
+          <CardDescription>
+            Create a new post to share (Markdown supported for code blocks,
+            e.g., ```typescript, for bold text **bold**, emoji's supported too,
+            see markdown formatting for more)
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-4" action={handleSubmission}>
@@ -27,7 +32,11 @@ export default function createBlogRoute() {
 
             <div className="flex flex-col gap-2">
               <Label>Content</Label>
-              <Textarea name="content" required placeholder="Content" />
+              <Textarea
+                name="content"
+                required
+                placeholder="Write your content here. Use ```typescript for code blocks."
+              />
             </div>
 
             <div className="flex flex-col gap-2">

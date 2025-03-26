@@ -1,5 +1,5 @@
+/* app/globals.css */
 @import "tailwindcss";
-/* @import "tw-animate-css"; */
 
 :root {
   --radius: 0.625rem;
@@ -18,9 +18,9 @@
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0 / 0.5); /* Your lighter border */
+  --border: oklch(0.922 0 0 / 0.5);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.9 0 0); /* Lighter ring: 90% lightness */
+  --ring: oklch(0.9 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -45,12 +45,34 @@
 
   * {
     border-color: var(--border);
-    outline-color: var(--ring); /* Now lighter */
+    outline-color: var(--ring);
     outline-width: 1px;
   }
 
   pre,
   code {
     font-family: var(--font-jetbrains-mono), monospace;
+  }
+
+  /* Style Markdown code blocks */
+  .markdown-content pre {
+    background: var(--muted);
+    padding: 1rem;
+    border-radius: var(--radius);
+    overflow-x: auto;
+    color: var(--foreground);
+  }
+
+  .markdown-content code {
+    background: var(--muted);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+  }
+
+  /* Inline code within paragraphs */
+  p code {
+    background: var(--muted);
+    padding: 0.1rem 0.3rem;
+    border-radius: 0.25rem;
   }
 }
