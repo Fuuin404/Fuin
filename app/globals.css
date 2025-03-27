@@ -78,7 +78,7 @@
 
   /* Clamping for BlogPostCard on iPad */
   .clamp-container {
-    max-height: 2.1875rem; /* 2 lines at text-sm (14px) with line-height 1.25 (17.5px) */
+    max-height: 2.21rem; /* 2 lines at text-sm (14px) with line-height 1.25 (17.5px) */
     overflow: hidden;
     text-overflow: ellipsis;
   }
