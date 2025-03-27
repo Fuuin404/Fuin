@@ -3,12 +3,13 @@
 import ReactMarkdown, { Components } from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkBreaks from "remark-breaks";
+import { Element } from "hast"; // Import Element type from hast
 import "highlight.js/styles/github.css";
 
 // Define the type for the props passed to each component
 interface MarkdownNodeProps {
-  node?: any; // Make node optional to match ReactMarkdown's type
-  [key: string]: any; // Allow other props (like className, children, etc.)
+  node?: Element; // Use Element type, make it optional
+  [key: string]: unknown; // Use unknown instead of any
 }
 
 interface MarkdownContentProps {
