@@ -8,7 +8,8 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
-import "highlight.js/styles/github.css"; // Or your preferred style
+import remarkBreaks from "remark-breaks"; // Import the plugin
+import "highlight.js/styles/github.css";
 
 interface IappProps {
   data: {
@@ -62,7 +63,10 @@ export function BlogPostCard({ data }: IappProps) {
           </h3>
 
           <div className="mb-4 text-sm text-gray-600 clamp-container">
-            <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
+            <ReactMarkdown
+              rehypePlugins={[rehypeHighlight]}
+              remarkPlugins={[remarkBreaks]} // Add remark-breaks here
+            >
               {data.content}
             </ReactMarkdown>
           </div>

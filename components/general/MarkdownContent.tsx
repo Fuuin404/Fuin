@@ -2,6 +2,7 @@
 
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
+import remarkBreaks from "remark-breaks";
 import "highlight.js/styles/github.css";
 
 interface MarkdownContentProps {
@@ -12,9 +13,12 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
   return (
     <ReactMarkdown
       rehypePlugins={[rehypeHighlight]}
+      remarkPlugins={[remarkBreaks]}
       components={{
-        p: ({ ...props }) => <p className="text-gray-700" {...props} />, // Remove `node`
-        pre: ({ ...props }) => <pre className="markdown-content" {...props} />, // Remove `node`
+        p: ({ node, ...props }) => <p className="text-gray-700" {...props} />, // Exclude node
+        pre: ({ node, ...props }) => (
+          <pre className="markdown-content" {...props} />
+        ), // Exclude node
       }}
     >
       {content}

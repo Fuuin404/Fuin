@@ -76,17 +76,29 @@
     border-radius: 0.25rem;
   }
 
+  /* Add spacing for Markdown paragraphs (Approach 2) */
+  .text-gray-700 {
+    margin-bottom: 1rem; /* Space between paragraphs */
+  }
+
+  /* Add spacing for <br> tags (Approach 1) */
+  .text-gray-700 br {
+    display: block;
+    content: "";
+    margin-bottom: 0.5rem; /* Space after a <br> */
+  }
+
   /* Clamping for BlogPostCard on iPad */
   .clamp-container {
-    max-height: 2.7rem; /* 2 lines at text-sm (14px) with line-height 1.25 (17.5px) */
+    max-height: 2.7rem;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .clamp-container > * {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Webkit prefix for Safari/iPad */
-    line-clamp: 2; /* Standard property for modern browsers */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
