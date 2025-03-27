@@ -76,11 +76,17 @@
     border-radius: 0.25rem;
   }
 
-  /* Custom line clamping for iPad compatibility */
-  .custom-line-clamp {
+  /* Clamping for BlogPostCard on iPad */
+  .clamp-container {
+    max-height: 3rem; /* Adjust based on your text-sm line height */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .clamp-container > * {
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Webkit prefix for Safari (including iPad) */
-    line-clamp: 2; /* Standard property for broader compatibility */
+    -webkit-line-clamp: 2; /* Webkit prefix for Safari/iPad */
+    line-clamp: 2; /* Standard property for modern browsers */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

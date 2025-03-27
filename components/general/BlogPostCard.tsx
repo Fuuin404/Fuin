@@ -61,7 +61,7 @@ export function BlogPostCard({ data }: IappProps) {
             {data.title}
           </h3>
 
-          <div className="mb-4 text-sm text-gray-600 custom-line-clamp">
+          <div className="mb-4 text-sm text-gray-600 clamp-container">
             <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
               {data.content}
             </ReactMarkdown>
