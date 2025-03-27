@@ -1,29 +1,43 @@
-"use client";
-
-import ReactMarkdown, { Components } from "react-markdown";
+import React from "react";
+import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkBreaks from "remark-breaks";
-import { Element } from "hast"; // Import Element type from hast
+import { ComponentPropsWithoutRef } from "react";
 import "highlight.js/styles/github.css";
-
-// Define the type for the props passed to each component
-interface MarkdownNodeProps {
-  node?: Element; // Use Element type, make it optional
-  [key: string]: unknown; // Use unknown instead of any
-}
 
 interface MarkdownContentProps {
   content: string;
 }
 
+// Define proper types for each markdown element
+type ParagraphProps = ComponentPropsWithoutRef<"p"> & { node?: unknown };
+type PreProps = ComponentPropsWithoutRef<"pre"> & { node?: unknown };
+type CodeProps = ComponentPropsWithoutRef<"code"> & {
+  node?: unknown;
+  inline?: boolean;
+};
+
 export function MarkdownContent({ content }: MarkdownContentProps) {
-  // Define the components with proper typing
-  const components: Components = {
-    p: ({ node: _node, ...props }: MarkdownNodeProps) => (
+  const components = {
+    p: ({ node: _node, ...props }: ParagraphProps) => (
       <p className="text-gray-700" {...props} />
     ),
-    pre: ({ node: _node, ...props }: MarkdownNodeProps) => (
-      <pre className="markdown-content" {...props} />
+    pre: ({ node: _node, ...props }: PreProps) => (
+      <pre className="p-4 bg-gray-100 rounded-lg overflow-auto" {...props} />
+    ),
+    code: ({
+      node: _node,
+      className,
+      children,
+      inline,
+      ...props
+    }: CodeProps) => (
+      <code
+        className={`hljs ${className || ""} ${inline ? "inline" : "block"}`}
+        {...props}
+      >
+        {children}
+      </code>
     ),
   };
 
