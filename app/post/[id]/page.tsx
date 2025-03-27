@@ -47,7 +47,7 @@ export default async function IdPage({ params }: { params: Params }) {
           <div className="flex items-center gap-x-2">
             <div className="relative size-10 overflow-hidden rounded-full">
               <Image
-                src={data.authorImage}
+                src={data.authorImage || "/default-avatar.jpg"}
                 alt={data.authorName}
                 fill
                 className="object-cover"
@@ -66,7 +66,7 @@ export default async function IdPage({ params }: { params: Params }) {
       </div>
       <div className="relative h-[400px] w-full mb-8 overflow-hidden rounded-lg">
         <Image
-          src={data.imageUrl}
+          src={data.imageUrl || "/default-image.jpg"}
           alt={data.title}
           fill
           className="object-cover"

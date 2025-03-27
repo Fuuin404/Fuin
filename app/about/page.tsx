@@ -22,8 +22,9 @@ export default function About() {
       </ul>
       <p className="mt-4">
         Think of us as digital alchemists—turning code into canvas, and ideas
-        into motion. Welcome to Fūin, where design meets wonder.
+        into motion. Welcome to Fūin.
       </p>
+      <p className="mt-4">info@fuuin.com</p>
     </div>
   );
 }

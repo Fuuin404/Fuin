@@ -75,4 +75,14 @@
     padding: 0.1rem 0.3rem;
     border-radius: 0.25rem;
   }
+
+  /* Custom line clamping for iPad compatibility */
+  .custom-line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Webkit prefix for Safari (including iPad) */
+    line-clamp: 2; /* Standard property for broader compatibility */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

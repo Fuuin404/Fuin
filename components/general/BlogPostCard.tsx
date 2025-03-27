@@ -1,4 +1,3 @@
-// BlogPostCard.tsx
 "use client";
 
 import Link from "next/link";
@@ -62,7 +61,7 @@ export function BlogPostCard({ data }: IappProps) {
             {data.title}
           </h3>
 
-          <div className="mb-4 text-sm text-gray-600 line-clamp-2">
+          <div className="mb-4 text-sm text-gray-600 custom-line-clamp">
             <ReactMarkdown rehypePlugins={[rehypeHighlight]}>
               {data.content}
             </ReactMarkdown>
