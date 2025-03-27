@@ -19,7 +19,7 @@ export default function createBlogRoute() {
           <CardTitle>Create Post</CardTitle>
           <CardDescription>
             Create a new post to share (Markdown supported for code blocks,
-            e.g., ```typescript, for bold text **bold**, emoji's supported too,
+            e.g., ```typescript, for bold text **bold**, emojis supported too,
             see markdown formatting for more)
           </CardDescription>
         </CardHeader>

@@ -13,10 +13,8 @@ export function MarkdownContent({ content }: MarkdownContentProps) {
     <ReactMarkdown
       rehypePlugins={[rehypeHighlight]}
       components={{
-        p: ({ node, ...props }) => <p className="text-gray-700" {...props} />,
-        pre: ({ node, ...props }) => (
-          <pre className="markdown-content" {...props} />
-        ),
+        p: ({ ...props }) => <p className="text-gray-700" {...props} />, // Remove `node`
+        pre: ({ ...props }) => <pre className="markdown-content" {...props} />, // Remove `node`
       }}
     >
       {content}
