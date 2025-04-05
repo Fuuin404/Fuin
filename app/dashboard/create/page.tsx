@@ -55,7 +55,6 @@ export default function CreateBlogRoute() {
               <Label>p5.js Embed Code</Label>
               <Textarea
                 name="sketchEmbedCode"
-                required
                 placeholder='Paste the entire iframe code, e.g., <iframe src="https://editor.p5js.org/username/full/sketchID"></iframe>'
               />
             </div>
