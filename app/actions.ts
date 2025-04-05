@@ -17,20 +17,25 @@ export async function handleSubmission(formData: FormData) {
   // Get the full iframe string from form
   const sketchEmbedCode = formData.get("sketchEmbedCode") as string | null;
 
-  // Extract only the src URL from the iframe
-  const sketchUrl = extractSrcFromIframe(sketchEmbedCode);
-  if (!sketchUrl) {
+  // Extract only the src URL from the iframe if embed code is provided
+  const sketchUrl = sketchEmbedCode
+    ? extractSrcFromIframe(sketchEmbedCode)
+    : null;
+
+  // Optionally handle case where no embed code is provided
+  if (!sketchUrl && sketchEmbedCode) {
     throw new Error(
       "Invalid iframe code. Please provide a valid p5.js embed code."
     );
   }
 
+  // Create the blog post in the database
   await prisma.blogPost.create({
     data: {
       title: title as string,
       content: content as string,
       imageUrl: imageUrl as string,
-      sketchUrl: sketchUrl as string,
+      sketchUrl: sketchUrl || "", // If no sketchUrl, store an empty string
       authorId: user.id,
       authorImage: user.picture as string,
       authorName: user.given_name as string,
@@ -42,7 +47,7 @@ export async function handleSubmission(formData: FormData) {
 }
 
 // Extracts src="..." from the iframe HTML string
-function extractSrcFromIframe(iframeCode: string | null): string | null {
+function extractSrcFromIframe(iframeCode: string): string | null {
   if (!iframeCode) return null;
   const match = iframeCode.match(/src="(.*?)"/);
   return match ? match[1] : null;
