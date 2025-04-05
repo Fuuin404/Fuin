@@ -1,4 +1,5 @@
-// app/dashboard/create/page.tsx
+"use client";
+
 import { handleSubmission } from "@/app/actions";
 import { Submitbutton } from "@/components/general/Submitbutton";
 import {
@@ -11,16 +12,17 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function createBlogRoute() {
+export default function CreateBlogRoute() {
   return (
     <div>
       <Card className="max-w-lg mx-auto">
         <CardHeader>
           <CardTitle>Create Post</CardTitle>
           <CardDescription>
-            Create a new post to share (Markdown supported for code blocks,
-            e.g., ```typescript, for bold text **bold**, emojis supported too,
-            see markdown formatting for more)
+            Share a p5.js sketch by pasting its embed code from the p5.js
+            editor. To get the embed code, go to your sketch, click "Share", and
+            copy the "Embed" code. It should look like: &lt;iframe
+            src="https://editor.p5js.org/username/full/sketchID"&gt;&lt;/iframe&gt;
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -35,14 +37,29 @@ export default function createBlogRoute() {
               <Textarea
                 name="content"
                 required
-                placeholder="Write your content here. Use ```typescript for code blocks."
+                placeholder="Describe your sketch or add notes (Markdown supported)"
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <Label>Image URL</Label>
-              <input name="url" required type="url" placeholder="Image url" />
+              <input
+                name="imageUrl"
+                required
+                type="url"
+                placeholder="Image url"
+              />
             </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>p5.js Embed Code</Label>
+              <Textarea
+                name="sketchEmbedCode"
+                required
+                placeholder='Paste the entire iframe code, e.g., <iframe src="https://editor.p5js.org/username/full/sketchID"></iframe>'
+              />
+            </div>
+
             <Submitbutton />
           </form>
         </CardContent>

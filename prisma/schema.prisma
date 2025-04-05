@@ -12,6 +12,7 @@ model BlogPost {
   title       String
   content     String
   imageUrl    String
+  sketchUrl   String?
   authorId    String
   authorName  String
   authorImage String

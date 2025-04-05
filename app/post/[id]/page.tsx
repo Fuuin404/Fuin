@@ -25,7 +25,7 @@ type Params = Promise<{ id: string }>;
 export default async function IdPage({ params }: { params: Params }) {
   const { id } = await params;
   const data = await getData(id);
-  console.log("Markdown content:", data.content); // Added here to log the content
+  console.log("Markdown content:", data.content); // Logs the content for debugging
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -77,6 +77,19 @@ export default async function IdPage({ params }: { params: Params }) {
       <Card>
         <CardContent className="pt-6">
           <MarkdownContent content={data.content} />
+          {/* Add the iframe to display the p5.js sketch */}
+          {data.sketchUrl && (
+            <div className="mt-6">
+              <iframe
+                src={data.sketchUrl}
+                width="100%"
+                height="500"
+                frameBorder="0"
+                title="p5.js Sketch"
+                allow="fullscreen"
+              ></iframe>
+            </div>
+          )}
           <div className="mt-4 flex items-center space-x-2">
             <LikeButton postId={data.id} initialLikes={data.likes} />
             {user && user.id === data.authorId && (

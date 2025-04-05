@@ -12,13 +12,25 @@ export async function handleSubmission(formData: FormData) {
 
   const title = formData.get("title");
   const content = formData.get("content");
-  const url = formData.get("url");
+  const imageUrl = formData.get("imageUrl");
+
+  // Get the full iframe string from form
+  const sketchEmbedCode = formData.get("sketchEmbedCode") as string | null;
+
+  // Extract only the src URL from the iframe
+  const sketchUrl = extractSrcFromIframe(sketchEmbedCode);
+  if (!sketchUrl) {
+    throw new Error(
+      "Invalid iframe code. Please provide a valid p5.js embed code."
+    );
+  }
 
   await prisma.blogPost.create({
     data: {
       title: title as string,
       content: content as string,
-      imageUrl: url as string,
+      imageUrl: imageUrl as string,
+      sketchUrl: sketchUrl as string,
       authorId: user.id,
       authorImage: user.picture as string,
       authorName: user.given_name as string,
@@ -27,6 +39,13 @@ export async function handleSubmission(formData: FormData) {
 
   revalidatePath("/");
   return redirect("/dashboard");
+}
+
+// Extracts src="..." from the iframe HTML string
+function extractSrcFromIframe(iframeCode: string | null): string | null {
+  if (!iframeCode) return null;
+  const match = iframeCode.match(/src="(.*?)"/);
+  return match ? match[1] : null;
 }
 
 export async function deletePost(postId: string) {
@@ -58,15 +77,8 @@ export async function deletePost(postId: string) {
     throw new Error("Not authorized");
   }
 
-  // Delete associated likes first
-  await prisma.likes.deleteMany({
-    where: { postId },
-  });
-
-  // Now delete the blog post
-  await prisma.blogPost.delete({
-    where: { id: postId },
-  });
+  await prisma.likes.deleteMany({ where: { postId } });
+  await prisma.blogPost.delete({ where: { id: postId } });
 
   revalidatePath("/dashboard");
 }
@@ -84,16 +96,11 @@ export async function toggleLike(postId: string) {
   if (!user) throw new Error("Unauthorized");
 
   const existingLike = await prisma.likes.findFirst({
-    where: {
-      userId: user.id,
-      postId: postId,
-    },
+    where: { userId: user.id, postId },
   });
 
   if (existingLike) {
-    await prisma.likes.delete({
-      where: { id: existingLike.id },
-    });
+    await prisma.likes.delete({ where: { id: existingLike.id } });
   } else {
     await prisma.likes.create({
       data: {
