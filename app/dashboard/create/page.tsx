@@ -18,12 +18,7 @@ export default function CreateBlogRoute() {
       <Card className="max-w-lg mx-auto">
         <CardHeader>
           <CardTitle>Create Post</CardTitle>
-          <CardDescription>
-            Share a p5.js sketch by pasting its embed code from the p5.js
-            editor. To get the embed code, go to your sketch, click "Share", and
-            copy the "Embed" code. It should look like: &lt;iframe
-            src="https://editor.p5js.org/username/full/sketchID"&gt;&lt;/iframe&gt;
-          </CardDescription>
+          <CardDescription>Create and Share a post today:</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="flex flex-col gap-4" action={handleSubmission}>
@@ -37,7 +32,7 @@ export default function CreateBlogRoute() {
               <Textarea
                 name="content"
                 required
-                placeholder="Describe your sketch or add notes (Markdown supported)"
+                placeholder="Add content (Markdown supported: **bold**, ```javascript yourcode```)"
               />
             </div>
 
@@ -47,7 +42,7 @@ export default function CreateBlogRoute() {
                 name="imageUrl"
                 required
                 type="url"
-                placeholder="Image url"
+                placeholder="Add Image url. Image host sites allowed: flickr, pixabay, pinterest."
               />
             </div>
 
@@ -55,7 +50,7 @@ export default function CreateBlogRoute() {
               <Label>p5.js Embed Code</Label>
               <Textarea
                 name="sketchEmbedCode"
-                placeholder='Paste the entire iframe code, e.g., <iframe src="https://editor.p5js.org/username/full/sketchID"></iframe>'
+                placeholder='To get the embed code, go to your sketch in p5, click "Share", and copy the "Embed" code. It should look like: <iframe src="https://editor.p5js.org/username/full/sketchID"></iframe>'
               />
             </div>
 
