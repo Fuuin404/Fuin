@@ -42,7 +42,7 @@ export default function CreateBlogRoute() {
                 name="imageUrl"
                 required
                 type="url"
-                placeholder="Add Image url. Image host sites allowed: flickr, pixabay, pinterest."
+                placeholder="Image host sites we use: flickr, pixabay, pinterest."
               />
             </div>
 
