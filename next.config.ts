@@ -23,6 +23,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         port: "",
       },
+      {
+        hostname: "live.staticflickr.com", // Added Flickr domain here
+        protocol: "https",
+        port: "",
+      },
     ],
   },
 };
