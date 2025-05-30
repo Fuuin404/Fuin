@@ -1,4 +1,3 @@
-// app/post/[id]/page.tsx
 import { prisma } from "@/app/utils/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -9,6 +8,7 @@ import { LikeButton } from "@/components/general/LikeButton";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import DeletePostButton from "./DeletePostButton";
 import { MarkdownContent } from "@/components/general/MarkdownContent";
+import VideoPlayer from "@/components/general/VideoPlayer";
 
 async function getData(id: string) {
   const data = await prisma.blogPost.findUnique({
@@ -25,7 +25,8 @@ type Params = Promise<{ id: string }>;
 export default async function IdPage({ params }: { params: Params }) {
   const { id } = await params;
   const data = await getData(id);
-  console.log("Markdown content:", data.content); // Logs the content for debugging
+  console.log("Markdown content:", data.content);
+  console.log("Video URL:", data.videoUrl); // Debug
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -77,7 +78,9 @@ export default async function IdPage({ params }: { params: Params }) {
       <Card>
         <CardContent className="pt-6">
           <MarkdownContent content={data.content} />
-          {/* Add the iframe to display the p5.js sketch */}
+          {/* Display the video if videoUrl exists */}
+          {data.videoUrl && <VideoPlayer url={data.videoUrl} />}
+          {/* Display the p5.js sketch if sketchUrl exists */}
           {data.sketchUrl && (
             <div className="mt-6">
               <iframe

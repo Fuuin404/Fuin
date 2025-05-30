@@ -20,7 +20,12 @@ async function getData() {
 export default function Home() {
   return (
     <div className="mb-3">
-      <h1 className="text-3xl font-medium mb-4">Latest Posts</h1>
+      <h1
+        className="text-2xl font-mono mb-4"
+        style={{ fontFamily: "font-family: 'Lora', serif" }}
+      >
+        Latest Posts:
+      </h1>
       {/* <Suspense fallback={<BlogPostsGrid />}> */}
       <BlogPosts />
       {/* </Suspense> */}
@@ -32,7 +37,7 @@ async function BlogPosts() {
   const data = await getData();
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
       {data.map((item) => (
         <BlogPostCard data={item} key={item.id} />
       ))}

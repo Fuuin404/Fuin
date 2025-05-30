@@ -4,28 +4,33 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "https",
         hostname: "www.startpage.com",
-        protocol: "https",
         port: "",
       },
       {
+        protocol: "https",
         hostname: "i.pinimg.com",
-        protocol: "https",
         port: "",
       },
       {
+        protocol: "https",
         hostname: "lh3.googleusercontent.com",
-        protocol: "https",
         port: "",
       },
       {
+        protocol: "https",
         hostname: "cdn.pixabay.com",
-        protocol: "https",
         port: "",
       },
       {
-        hostname: "live.staticflickr.com", // Added Flickr domain here
         protocol: "https",
+        hostname: "live.staticflickr.com",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "combo.staticflickr.com", // add this too for your specific error
         port: "",
       },
     ],

@@ -5,9 +5,9 @@ import { Submitbutton } from "@/components/general/Submitbutton";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -43,6 +43,15 @@ export default function CreateBlogRoute() {
                 required
                 type="url"
                 placeholder="Image host sites we use: flickr, pixabay, pinterest."
+              />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <Label>Video URL (Optional)</Label>
+              <input
+                name="videoUrl"
+                type="url"
+                placeholder="Enter a video URL from Flickr (e.g., https://live.staticflickr.com/video/.../1080p.mp4)"
               />
             </div>
 

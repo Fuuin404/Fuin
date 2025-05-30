@@ -46,7 +46,7 @@ export function BlogPostCard({ data }: IappProps) {
   };
 
   return (
-    <div className="group relative overflow-hidden rounded-sm border border-gray-200 bg-white shadow-md transition-all hover:shadow-lg">
+    <div className="group relative overflow-hidden rounded-sm border border-gray-200 bg-zinc-100 shadow-md transition-all hover:shadow-lg">
       {/* Image as a clickable link */}
       <Link href={`/post/${data.id}`}>
         <div className="relative h-48 w-full overflow-hidden">
@@ -62,7 +62,7 @@ export function BlogPostCard({ data }: IappProps) {
       <div className="p-4">
         {/* Title as a clickable link */}
         <Link href={`/post/${data.id}`}>
-          <h3 className="mb-2 text-lg font-semibold text-gray-900 hover:text-blue-500">
+          <h3 className="mb-2 text-lg font-mono font-bold text-gray-900 hover:text-red-500">
             {data.title}
           </h3>
         </Link>

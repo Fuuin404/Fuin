@@ -36,6 +36,10 @@
   --sidebar-ring: oklch(0.9 0 0);
 }
 
+.font-press-start-2p {
+  font-family: var(--font-press-start-2p), monospace !important;
+}
+
 @layer base {
   body {
     background-color: var(--background);

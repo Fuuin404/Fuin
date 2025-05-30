@@ -36,18 +36,24 @@ export default async function DashboardRoute() {
   return (
     <div>
       <div className="flex items-center justify-left mb-4 gap-8">
-        <h1 className="text-3xl font-medium">Your Posts</h1>
+        <h1
+          className="text-2xl font-mono font-light"
+          style={{ fontFamily: "font-family: 'Lora', serif" }}
+        >
+          Your Posts:
+        </h1>
         <Link
           className={buttonVariants({
             variant: "outline",
-            className: "hover:text-red-500",
+            className:
+              "text-red-500 hover:text-black font-mono border-1 border-black",
           })}
           href="/dashboard/create"
         >
           Create Post
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {data.map((item) => (
           <BlogPostCard data={item} key={item.id} />
         ))}

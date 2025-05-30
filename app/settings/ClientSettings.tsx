@@ -64,7 +64,7 @@ export default function ClientSettings({ email }: { email: string }) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4">
+    <div className="max-w-3xl mx-auto py-8 px-4 font-mono">
       <h1 className="text-3xl font-medium mb-4">Settings</h1>
       <p>Email: {email}</p>
 

@@ -1,7 +1,7 @@
 "use server";
 
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { prisma } from "./utils/db";
+import { prisma } from "@/app/utils/db";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
@@ -13,16 +13,32 @@ export async function handleSubmission(formData: FormData) {
   const title = formData.get("title");
   const content = formData.get("content");
   const imageUrl = formData.get("imageUrl");
-
-  // Get the full iframe string from form
+  const videoUrlInput = formData.get("videoUrl") as string | null;
   const sketchEmbedCode = formData.get("sketchEmbedCode") as string | null;
 
-  // Extract only the src URL from the iframe if embed code is provided
+  // Transform Flickr video URL to proxy URL
+  let videoUrl: string | null = null;
+  if (videoUrlInput && videoUrlInput.includes("live.staticflickr.com/video")) {
+    const match = videoUrlInput.match(
+      /\/video\/([^\/]+)\/([^\/]+)\/[^\/]+\.mp4/
+    );
+    const videoId = match ? match[1] : null;
+    const flickrHash = match ? match[2] : null;
+    const queryParams = videoUrlInput.split("?")[1] || "";
+    if (videoId && flickrHash) {
+      videoUrl = `/api/video/video/${videoId}?hash=${flickrHash}&${queryParams}`;
+      console.log("Transformed videoUrl:", videoUrl);
+    } else {
+      console.error("Failed to extract videoId or hash from:", videoUrlInput);
+    }
+  }
+
+  // Extract iframe src from sketchEmbedCode if provided
   const sketchUrl = sketchEmbedCode
     ? extractSrcFromIframe(sketchEmbedCode)
     : null;
 
-  // Optionally handle case where no embed code is provided
+  // Optionally handle case where no valid sketch URL is extracted
   if (!sketchUrl && sketchEmbedCode) {
     throw new Error(
       "Invalid iframe code. Please provide a valid p5.js embed code."
@@ -35,7 +51,8 @@ export async function handleSubmission(formData: FormData) {
       title: title as string,
       content: content as string,
       imageUrl: imageUrl as string,
-      sketchUrl: sketchUrl || "", // If no sketchUrl, store an empty string
+      videoUrl, // Store the proxy URL or null
+      sketchUrl: sketchUrl || "", // If no sketch, store an empty string
       authorId: user.id,
       authorImage: user.picture as string,
       authorName: user.given_name as string,
@@ -49,7 +66,7 @@ export async function handleSubmission(formData: FormData) {
 // Extracts src="..." from the iframe HTML string
 function extractSrcFromIframe(iframeCode: string): string | null {
   if (!iframeCode) return null;
-  const match = iframeCode.match(/src="(.*?)"/);
+  const match = iframeCode.match(/src="([^"]+)"/);
   return match ? match[1] : null;
 }
 
