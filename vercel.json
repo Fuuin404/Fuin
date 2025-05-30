@@ -1,14 +1,4 @@
 {
   "buildCommand": "pnpm run build",
-  "installCommand": "pnpm install --shamefully-hoist",
-  "scripts": {
-    "allow": [
-      "@prisma/client",
-      "@prisma/engines",
-      "prisma",
-      "sharp",
-      "esbuild",
-      "@vercel/speed-insights"
-    ]
-  }
+  "installCommand": "pnpm install --shamefully-hoist"
 }
