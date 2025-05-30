@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  request: { url: string },
-  { params }: { params: Promise<{ videoId: string }> }
+  request: NextRequest,
+  { params }: { params: { videoId: string } }
 ) {
-  const { videoId } = await params;
+  const { videoId } = params;
   const url = new URL(request.url);
   const flickrHash = url.searchParams.get("hash");
   url.searchParams.delete("hash"); // Remove hash from query params to avoid duplication

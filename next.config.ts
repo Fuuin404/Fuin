@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -30,10 +29,15 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "combo.staticflickr.com", // add this too for your specific error
+        hostname: "combo.staticflickr.com",
         port: "",
       },
     ],
+  },
+  eslint: {
+    // Explicitly specify that we're using the flat config format
+    // This ensures Next.js doesn't misinterpret an .eslintrc file
+    dirs: ["."], // Apply ESLint to the entire project
   },
 };
 
