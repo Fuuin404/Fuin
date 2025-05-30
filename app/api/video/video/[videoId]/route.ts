@@ -2,12 +2,15 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { videoId: string } }
+  context: { params: Promise<{ videoId: string }> }
 ) {
-  const { videoId } = params;
+  const { videoId } = await context.params;
+  if (!videoId) {
+    return NextResponse.json({ error: "Missing videoId" }, { status: 400 });
+  }
   const url = new URL(request.url);
   const flickrHash = url.searchParams.get("hash");
-  url.searchParams.delete("hash"); // Remove hash from query params to avoid duplication
+  url.searchParams.delete("hash");
   const queryParams = url.searchParams.toString();
   const flickrUrl = `https://live.staticflickr.com/video/${videoId}/${flickrHash}/1080p.mp4${
     queryParams ? `?${queryParams}` : ""

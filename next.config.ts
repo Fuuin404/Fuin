@@ -35,8 +35,6 @@ const nextConfig = {
     ],
   },
   eslint: {
-    // Explicitly specify that we're using the flat config format
-    // This ensures Next.js doesn't misinterpret an .eslintrc file
     dirs: ["."], // Apply ESLint to the entire project
   },
 };
